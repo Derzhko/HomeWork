@@ -19,6 +19,7 @@ void insertionSort(int numbers[], int arrayLength)
     }
     return;
 }
+
 int main()
 {
     int *numbers = malloc(startLength * sizeof(int));
