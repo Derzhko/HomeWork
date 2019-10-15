@@ -17,7 +17,6 @@ void sort(int numbers[], int numbersLength)
             }
         }
     }
-    return;
 }
 
 int main()
@@ -29,7 +28,7 @@ int main()
 
     for (int i = 0; i < numbersMaxLength; ++i)
     {
-        numbers[i] = -1;
+        numbers[i] = 0;
     }
 
     printf("Insert your number\n");
@@ -37,15 +36,24 @@ int main()
 
     while (number > 0)
     {
-        ++numbersLength;
-        numbers[numbersLength - 1] = number % 10;
+        numbers[numbersLength] = number % 10;
         number = number / 10;
+        ++numbersLength;
     }
 
     sort(numbers, numbersLength);
+    int index = 0;
+    for (index = 0; numbers[index] == 0; ++index)
+    {
+    }
+    if (numbers[0] == 0)
+    {
+        numbers[0] = numbers[index];
+        numbers[index] = 0;
+    }
     for (int i = 0; i < numbersLength; ++i)
     {
-        otherNumber = otherNumber + (numbers[i] * pow(10, numbersLength - i - 1));
+        otherNumber = otherNumber * 10 + numbers[i];
     }
 
     printf("Minimal number\n%d", otherNumber);
