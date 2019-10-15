@@ -16,40 +16,42 @@ void heapsort(int numbers[], int numbersLength)
     {
         if (numbers[2 * i + 1] > numbers [i] || (2 * i + 2 < numbersLength && numbers[2 * i + 2] > numbers[i]))
         {
-            int index = i;
+            int parent = i;
             bool isMax = false;
             while (!isMax)
             {
-                int helper = numbers[index];
-                if (2 * index + 2 < numbersLength)
+                int helper = numbers[parent];
+                int firstSubsidiary = 2 * parent + 1;
+                int secondSubsidiary = 2 * parent + 2;
+                if (secondSubsidiary < numbersLength)
                 {
-                    if (numbers[2 * index + 1] > numbers[2 * index + 2])
+                    if (numbers[firstSubsidiary] > numbers[secondSubsidiary])
                     {
-                        numbers[index] = numbers[2 * index + 1];
-                        numbers[2 * index + 1] = helper;
-                        index = 2 * index + 1;
+                        numbers[parent] = numbers[firstSubsidiary];
+                        numbers[firstSubsidiary] = helper;
+                        parent = firstSubsidiary;
                     }
                     else
                     {
-                        numbers[index] = numbers[2 * index + 2];
-                        numbers[2 * index + 2] = helper;
-                        index = 2 * index + 2;
+                        numbers[parent] = numbers[secondSubsidiary];
+                        numbers[secondSubsidiary] = helper;
+                        parent = secondSubsidiary;
                     }
                 }
                 else
                 {
-                    numbers[index] = numbers[2 * index + 1];
-                    numbers[2 * index + 1] = helper;
-                    index = 2 * index + 1;
+                    numbers[parent] = numbers[firstSubsidiary];
+                    numbers[firstSubsidiary] = helper;
+                    parent = firstSubsidiary;
                 }
 
-                if (index <= (numbersLength / 2 - 1))
+                if (parent <= (numbersLength / 2 - 1))
                 {
-                    if (numbers[2 * index + 1] < numbers[index])
+                    if (numbers[firstSubsidiary] < numbers[parent])
                     {
-                        if (2 * index + 2 < numbersLength)
+                        if (secondSubsidiary < numbersLength)
                         {
-                            if (numbers[2 * index + 2] < numbers[index])
+                            if (numbers[secondSubsidiary] < numbers[parent])
                             {
                                 isMax = true;
                             }
