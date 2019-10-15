@@ -3,7 +3,7 @@
 
 const int numbersMaxLength = 50;
 
-void qSort(int *numbers, int nose, int tail)
+void quickSort(int *numbers, int nose, int tail)
 {
     int helper = 0;
     int indexOfElement = (nose + tail) / 2;
@@ -52,9 +52,8 @@ void qSort(int *numbers, int nose, int tail)
         }
     }
 
-    qSort(numbers, nose, indexOfElement - 1);
-    qSort(numbers, indexOfElement + 1, tail);
-
+    quickSort(numbers, nose, indexOfElement - 1);
+    quickSort(numbers, indexOfElement + 1, tail);
 
     return;
 }
@@ -65,31 +64,29 @@ int main()
     int numbersLength = 0;
     for (int i = 0; i < numbersMaxLength; ++i)
     {
-        numbers[i] = -1;
+        numbers[i] = 0;
     }
 
     printf("Insert length\n");
     scanf("%d", &numbersLength);
-    printf("Insert your number\n");
+    printf("Insert your numbers\n");
 
     for (int i = 0; i < numbersLength; ++i)
     {
         scanf("%d", &numbers[i]);
     }
 
-    qSort(numbers, 0, numbersLength - 1);
+    quickSort(numbers, 0, numbersLength - 1);
 
-
-    int number1 = numbers[numbersLength - 1];
     int index = -1;
     for (int i = numbersLength - 2; i >= 0; --i)
     {
-        if (numbers[i] == number1)
+        if (numbers[i] == numbers[numbersLength - 1])
         {
             index = i;
             break;
         }
-        number1 = numbers[i];
+        numbers[numbersLength - 1] = numbers[i];
     }
 
     if (index != -1)
@@ -98,7 +95,7 @@ int main()
     }
     else
     {
-        printf("\nMax number is not to be");
+        printf("\nMax number does not exist");
     }
     return 0;
 }
