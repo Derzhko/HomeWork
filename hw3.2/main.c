@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-const int maxLength = 100;
+const int maxLength = 120;
 
 int main() {
 
-    FILE *Kojima = fopen("/home/alxderzhko/HomeWork/hw3.2/kojimageniy.txt", "r");
+    FILE *Kojima = fopen("../kojimageniy.txt", "r");
     if (Kojima == NULL)
     {
         printf("File is not open");
@@ -13,7 +13,6 @@ int main() {
     }
     int numberOfLines = 0;
     char line[maxLength];
-    printf("%s", line);
     while (fgets(line, maxLength, Kojima) != NULL)
     {
         for (int i = 0; line[i] != '\n'; ++i)
