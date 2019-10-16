@@ -1,27 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void otherSum(int *sum, int arrayLength, int value)
-{
-    if(sum[value - arrayLength + 1] != 0)
-    {
-        printf("\n");
-        for (int i = 0; i < value; ++i)
-        {
-            printf("%d ", sum[i]);
-        }
-        sum[value - arrayLength] += sum[value - arrayLength + 1];
-        sum[arrayLength - 1] = 0;
-        otherSum(sum, arrayLength - 1, value);
-    }
-    else if (sum[0] != value)
-    {
-    }
-    else
-    {
-        return;
-    }
-}
+void otherSum(int *sum, int nose, )
 
 int main() {
     int value = 0;
