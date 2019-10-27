@@ -79,14 +79,13 @@ int main()
     quickSort(numbers, 0, numbersLength - 1);
 
     int index = -1;
-    for (int i = numbersLength - 2; i >= 0; --i)
+    for (int i = numbersLength - 1; i > 0; --i)
     {
-        if (numbers[i] == numbers[numbersLength - 1])
+        if (numbers[i] == numbers[i - 1])
         {
             index = i;
             break;
         }
-        numbers[numbersLength - 1] = numbers[i];
     }
 
     if (index != -1)
