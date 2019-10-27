@@ -43,8 +43,9 @@ int main()
 
     sort(numbers, numbersLength);
     int index = 0;
-    for (index = 0; numbers[index] == 0; ++index)
+    while (numbers[index] == 0)
     {
+        ++index;
     }
     if (numbers[0] == 0)
     {
