@@ -3,7 +3,8 @@
 
 const int maxLength = 120;
 
-int main() {
+int main()
+{
 
     FILE *Kojima = fopen("../kojimageniy.txt", "r");
     if (Kojima == NULL)
