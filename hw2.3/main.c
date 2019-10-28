@@ -1,14 +1,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <math.h>
 
 const int numbersLength = 10;
-
-int getDigitByPosition(int number, int position)
-{
-    return (number % (int) pow(10, position)) / (int) pow(10, position - 1);
-}
 
 int main()
 {
@@ -16,19 +10,19 @@ int main()
     int cows = 0;
     int bulls = 0;
     int numbers[numbersLength];
+    int value[] = {0, 0, 0, 0};
+    int tryValue[] = {0, 0, 0, 0};
     for (int i = 0; i < numbersLength; ++i)
     {
         numbers[i] = i;
     }
-    int value = 0;
+    srand(time(NULL));
     for (int i = 0; i < 4; )
     {
-        srand(time(NULL));
         int randomIndex = 0;
         if (i == 0)
         {
             randomIndex = rand() % 9 + 1;
-
         }
         else
         {
@@ -36,7 +30,7 @@ int main()
         }
         if (numbers[randomIndex] != -1)
         {
-            value = value * 10 + numbers[randomIndex];
+            value[i] = numbers[randomIndex];
             numbers[randomIndex] = numbers[i];
             numbers[i] = -1;
             ++i;
@@ -50,21 +44,27 @@ int main()
         scanf("%d", &try);
         if ((try >= 1234) && (try <= 9876))
         {
-            for (int i = 1; i <= 4; ++i)
+            for (int i = 0; i < 4; i++)
             {
-                int valuesDigit = getDigitByPosition(value, i);
-                for (int j = 1; j <= 4; ++j)
+                tryValue[3 - i] = try % 10;
+                try = try / 10;
+            }
+            for (int i = 0; i < 4; ++i)
+            {
+                int valuesDigit = value[i];
+                for (int j = 0; j < 4; ++j)
                 {
-                    int tryDigit = getDigitByPosition(try, j);
+                    int tryDigit = tryValue[j];
                     if (valuesDigit == tryDigit)
                     {
                         if (i == j)
                         {
                             ++bulls;
                         }
-                    } else if (valuesDigit == tryDigit)
-                    {
-                        ++cows;
+                        else
+                        {
+                            ++cows;
+                        }
                     }
                 }
             }
