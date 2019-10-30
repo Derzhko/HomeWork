@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int gcd(int a, int b);//Наибольший общий делитель
+int searchGcd(int number1, int number2);//Наибольший общий делитель
 
 void fraction(int k)
 {
@@ -9,27 +9,27 @@ void fraction(int k)
     {
         eps /= (i + 0.);
     }
-    int n_min = k - 1;
-    int d_min = k;
-    double min = (k - 1.) / k;
+    int numeratorMin = k - 1;
+    int denominatorMin = k;
+    double maxValue = (k - 1.) / k;
     double previous = 0;
-    while (previous < min - eps)
+    while (previous < maxValue - eps)
     {
         for (int n = 1; n <= k - 1; ++n)
         {
             for (int d = k; d > n; --d)
             {
-                if (previous + eps < n / (d + 0.) && n / (d + 0.) < min + eps && gcd(n, d) == 1)
+                if (previous + eps < n / (d + 0.) && n / (d + 0.) < maxValue + eps && searchGcd(n, d) == 1)
                 {
-                    min = n / (d + 0.);
-                    n_min = n;
-                    d_min = d;
+                    maxValue = n / (d + 0.);
+                    numeratorMin = n;
+                    denominatorMin = d;
                 }
             }
         }
-        printf("%d / %d\n", n_min, d_min);
-        previous = min;
-        min = (k - 1.)/k;
+        printf("%d / %d\n", numeratorMin, denominatorMin);
+        previous = maxValue;
+        maxValue = (k - 1.) / k;
     }
     return;
 }
@@ -37,24 +37,25 @@ void fraction(int k)
 
 int main()
 {
-    int maxDen;
+    int maxDenominator = 0;
     printf("Insert max denominator\n");
-    scanf("%d", &maxDen);
-    fraction(maxDen);
+    scanf("%d", &maxDenominator);
+    fraction(maxDenominator);
     return 0;
 }
 
-int gcd(int a, int b)
+int searchGcd(int number1, int number2)
 {
-    while (a != 0 &&  b != 0) {
-        if (a >= b)
+    while (number1 != 0 && number2 != 0) {
+        if (number1 >= number2)
         {
-            a %= b;
+            number1 %= number2;
         }
         else
         {
-            b %= a;
+            number2 %= number1;
         }
     }
-    return a | b;
+    int result = number1 | number2;
+    return result;
 }
