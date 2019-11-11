@@ -53,7 +53,7 @@ int lookStackElement(struct Stack *stack)
 {
     if (isEmpty(stack))
     {
-        return NULL;
+        return (int)'\0';
     }
     return stack->first->value;
 }
