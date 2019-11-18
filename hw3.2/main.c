@@ -6,7 +6,7 @@ const int maxLength = 120;
 int main()
 {
 
-    FILE *Kojima = fopen("../kojimageniy.txt", "r");
+    FILE *Kojima = fopen("./kojimageniy.txt", "r");
     if (Kojima == NULL)
     {
         printf("File is not open");
