@@ -2,21 +2,22 @@
 
 const int arrayMaxLength = 20;
 
-void endShift(int numbers[], int arrayLength)
+void moveZerosToEnd(int *numbers, int arrayLength)
 {
-    int count = 0;
+    int index = arrayLength - 1;
     for (int i = arrayLength - 1; i >= 0; --i)
     {
         if (numbers[i] == 0)
         {
-            numbers[i] = numbers[arrayLength - count - 1];
-            numbers[arrayLength - count - 1] = 0;
-            ++count;
+            numbers[i] = numbers[index];
+            numbers[index] = 0;
+            --index;
         }
     }
 }
 
-int main() {
+int main()
+{
     int numbers[arrayMaxLength];
     for (int i = 0; i < arrayMaxLength; ++i)
     {
@@ -31,7 +32,7 @@ int main() {
         scanf("%d", &numbers[i]);
     }
 
-    endShift(numbers, arrayLength);
+    moveZerosToEnd(numbers, arrayLength);
 
     printf("Result array\n");
     for (int i = 0; i < arrayLength; ++i)
