@@ -1,9 +1,5 @@
-//
-// Created by alxderzhko on 01.10.2019.
-//
-
-#ifndef UNTITLED4_STACK_H
-#define UNTITLED4_STACK_H
+#ifndef STACK_H
+#define STACK_H
 #include <stdbool.h>
 
 struct Stack;
@@ -14,8 +10,8 @@ typedef struct Stack Stack;
 
 struct Stack* createStack();
 bool isEmpty(struct Stack* stack);
-bool push(int value, struct Stack *stack);
+bool push(char value, struct Stack *stack);
 int pop(struct Stack *stack);
 int lookStackElement(struct Stack *stack);
 
-#endif //UNTITLED4_STACK_H
+#endif //STACK_H

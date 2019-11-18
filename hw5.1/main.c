@@ -7,7 +7,7 @@ const int maxLength = 20;
 void addToPostfixSet(char postfixSet[], char value, int *stringTale)
 {
     postfixSet[*stringTale] = value;
-    ++*stringTale;
+    ++(*stringTale);
 }
 
 int main() {
@@ -29,52 +29,40 @@ int main() {
         {
             case '(':
             {
-                push((int)'(', myStack);
+                push('(', myStack);
                 break;
             }
             case ')':
             {
-                while ((char)lookStackElement(myStack) != '(')
+                while (lookStackElement(myStack) != '(')
                 {
-                    addToPostfixSet(postfixSet, (char)pop(myStack), &stringTale);
+                    addToPostfixSet(postfixSet, pop(myStack), &stringTale);
                 }
                 pop(myStack);
                 break;
             }
             case '+':
             {
-                if (!isEmpty(myStack) && (char)lookStackElement(myStack) != '(')
-                {
-                    addToPostfixSet(postfixSet, (char)pop(myStack), &stringTale);
-                }
-                push((int)'+', myStack);
-                break;
             }
             case '-':
             {
-                if (!isEmpty(myStack) && (char)lookStackElement(myStack) != '(')
+                if (!isEmpty(myStack) && lookStackElement(myStack) != '(')
                 {
-                    addToPostfixSet(postfixSet, (char)pop(myStack), &stringTale);
+                    addToPostfixSet(postfixSet, pop(myStack), &stringTale);
                 }
-                push((int)'-', myStack);
+                push(infixSet[i], myStack);
                 break;
             }
             case '*':
             {
-                if ((char)lookStackElement(myStack) == '*' || (char)lookStackElement(myStack) == '/')
-                {
-                    addToPostfixSet(postfixSet, (char)pop(myStack), &stringTale);
-                }
-                push((int)'*', myStack);
-                break;
             }
             case '/':
             {
-                if ((char)lookStackElement(myStack) == '*' || (char)lookStackElement(myStack) == '/')
+                if (lookStackElement(myStack) == '*' || lookStackElement(myStack) == '/')
                 {
-                    addToPostfixSet(postfixSet, (char)pop(myStack), &stringTale);
+                    addToPostfixSet(postfixSet, pop(myStack), &stringTale);
                 }
-                push((int)'/', myStack);
+                push(infixSet[i], myStack);
                 break;
             }
             case ' ':
@@ -90,7 +78,7 @@ int main() {
     }
     while (!isEmpty(myStack))
     {
-        addToPostfixSet(postfixSet, (char)pop(myStack), &stringTale);
+        addToPostfixSet(postfixSet, pop(myStack), &stringTale);
     }
     printf("Postfix string %s", postfixSet);
     return 0;

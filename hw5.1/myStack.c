@@ -1,13 +1,9 @@
-//
-// Created by alxderzhko on 01.10.2019.
-//
-
 #include <stdlib.h>
 #include "stack.h"
 
 struct StackElement
 {
-    int value;
+    char value;
     struct StackElement* next;
 };
 
@@ -18,9 +14,9 @@ struct Stack
 
 Stack* createStack()
 {
-    Stack* stck1 = malloc(sizeof(Stack));
-    stck1->first = NULL;
-    return stck1;
+    Stack* stack = malloc(sizeof(Stack));
+    stack->first = NULL;
+    return stack;
 }
 
 bool isEmpty(Stack *stack)
@@ -28,7 +24,7 @@ bool isEmpty(Stack *stack)
     return stack->first == NULL;
 }
 
-bool push(int value, Stack *stack)
+bool push(char value, Stack *stack)
 {
     StackElement *stackElement = malloc(sizeof(StackElement));
     stackElement->value = value;
@@ -41,11 +37,12 @@ int pop(struct Stack* stack)
 {
     if (isEmpty(stack))
     {
-        return 0;
+        return '\0';
     }
 
     int poppedValue = stack->first->value;
     stack->first = stack->first->next;
+    free(stack->first);
     return poppedValue;
 }
 
