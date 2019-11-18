@@ -4,6 +4,60 @@
 
 const int numbersMaxLength = 20;
 
+void findingMaxElement(int parent, int numbers[], int numbersLength)
+{
+    bool isMax = false;
+    while (!isMax)
+    {
+        int helper = numbers[parent];
+        int firstSubsidiary = 2 * parent + 1;
+        int secondSubsidiary = 2 * parent + 2;
+        if (secondSubsidiary < numbersLength)
+        {
+            if (numbers[firstSubsidiary] > numbers[secondSubsidiary])
+            {
+                numbers[parent] = numbers[firstSubsidiary];
+                numbers[firstSubsidiary] = helper;
+                parent = firstSubsidiary;
+            }
+            else
+            {
+                numbers[parent] = numbers[secondSubsidiary];
+                numbers[secondSubsidiary] = helper;
+                parent = secondSubsidiary;
+            }
+        }
+        else
+        {
+            numbers[parent] = numbers[firstSubsidiary];
+            numbers[firstSubsidiary] = helper;
+            parent = firstSubsidiary;
+        }
+
+        if (parent <= (numbersLength / 2 - 1))
+        {
+            if (numbers[firstSubsidiary] < numbers[parent])
+            {
+                if (secondSubsidiary < numbersLength)
+                {
+                    if (numbers[secondSubsidiary] < numbers[parent])
+                    {
+                        isMax = true;
+                    }
+                }
+                else
+                {
+                    isMax = true;
+                }
+            }
+        }
+        else
+        {
+            isMax = true;
+        }
+    }
+}
+
 void heapsort(int numbers[], int numbersLength)
 {
 
@@ -16,57 +70,7 @@ void heapsort(int numbers[], int numbersLength)
     {
         if (numbers[2 * i + 1] > numbers [i] || (2 * i + 2 < numbersLength && numbers[2 * i + 2] > numbers[i]))
         {
-            int parent = i;
-            bool isMax = false;
-            while (!isMax)
-            {
-                int helper = numbers[parent];
-                int firstSubsidiary = 2 * parent + 1;
-                int secondSubsidiary = 2 * parent + 2;
-                if (secondSubsidiary < numbersLength)
-                {
-                    if (numbers[firstSubsidiary] > numbers[secondSubsidiary])
-                    {
-                        numbers[parent] = numbers[firstSubsidiary];
-                        numbers[firstSubsidiary] = helper;
-                        parent = firstSubsidiary;
-                    }
-                    else
-                    {
-                        numbers[parent] = numbers[secondSubsidiary];
-                        numbers[secondSubsidiary] = helper;
-                        parent = secondSubsidiary;
-                    }
-                }
-                else
-                {
-                    numbers[parent] = numbers[firstSubsidiary];
-                    numbers[firstSubsidiary] = helper;
-                    parent = firstSubsidiary;
-                }
-
-                if (parent <= (numbersLength / 2 - 1))
-                {
-                    if (numbers[firstSubsidiary] < numbers[parent])
-                    {
-                        if (secondSubsidiary < numbersLength)
-                        {
-                            if (numbers[secondSubsidiary] < numbers[parent])
-                            {
-                                isMax = true;
-                            }
-                        }
-                        else
-                        {
-                            isMax = true;
-                        }
-                    }
-                }
-                else
-                {
-                    isMax = true;
-                }
-            }
+            findingMaxElement(i, numbers, numbersLength);
         }
     }
     int helper = numbers[0];
