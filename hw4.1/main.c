@@ -14,7 +14,7 @@ int safePosition(List* list, int step)
 int main() {
     int size = 0;
     int step = 0;
-    printf("Insert number of soldiery\n");
+    printf("Insert number of soldiers\n");
     scanf("%d", &size);
     List* list = createList(size);
     printf("Insert number of killed soldier\n");

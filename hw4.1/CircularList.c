@@ -1,7 +1,3 @@
-//
-// Created by Администратор on 20.10.2019.
-//
-
 #include "CircularList.h"
 #include <stdlib.h>
 
@@ -15,6 +11,7 @@ struct List
 {
     ListElement* first;
     ListElement* last;
+    int size;
 };
 
 List* createList(int size)
@@ -22,6 +19,7 @@ List* createList(int size)
     List* newList = malloc(sizeof(List));
     newList->first = NULL;
     newList->last = NULL;
+    newList->size = 0;
     for (int i = 0; i < size; ++i)
     {
         add(newList);
@@ -31,22 +29,13 @@ List* createList(int size)
 
 int size(List* list)
 {
-    int size = 0;
-    ListElement* element = list->first;
-    if (list->first == NULL)
-    {
-        return 0;
-    }
-    for (size = 1; element != list->last; ++size)
-    {
-        element = element->next;
-    }
-    return size;
+    return list->size;
 }
 
 void add(List* list)
 {
     ListElement* newElement = malloc(sizeof(ListElement));
+    ++list->size;
     if (list->first == NULL)
     {
         newElement->position = 1;
@@ -56,7 +45,8 @@ void add(List* list)
     }
     else
     {
-        newElement->position = ++list->last->position;
+        ++list->last->position;
+        newElement->position = list->last->position;
         list->last->next = newElement;
         newElement->next = list->first;
         list->last = newElement;
@@ -65,6 +55,7 @@ void add(List* list)
 
 void delete(int position, List* list)
 {
+    --list->size;
     if (position == 1)
     {
         list->first = list->first->next;

@@ -1,9 +1,5 @@
-//
-// Created by Администратор on 20.10.2019.
-//
-
-#ifndef HW4_1_LIST_H
-#define HW4_1_LIST_H
+#ifndef LIST_H
+#define LIST_H
 
 typedef struct List List;
 typedef struct ListElement ListElement;
@@ -14,4 +10,8 @@ void add(List* list);
 
 void delete(int position, List* list);
 
-#endif //HW4_1_LIST_H
+int size(List* list);
+
+int getValue(int position, List* list);
+
+#endif //LIST_H
