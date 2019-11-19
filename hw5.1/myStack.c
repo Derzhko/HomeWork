@@ -41,8 +41,9 @@ int pop(struct Stack* stack)
     }
 
     int poppedValue = stack->first->value;
+    StackElement *poppedElement = stack->first;
     stack->first = stack->first->next;
-    free(stack->first);
+    free(poppedElement);
     return poppedValue;
 }
 
