@@ -1,8 +1,41 @@
 #include <stdio.h>
 #include "stack.h"
 #include <string.h>
+#include <stdbool.h>
 
 const int maxLength = 20;
+
+bool isDigit(char number)
+{
+    return number >= '0' && number <= '9';
+}
+
+void toCount(int firstOperand, int secondOperand, char operation, Stack *myStack)
+{
+    switch (operation)
+    {
+        case '+':
+        {
+            push(firstOperand + secondOperand, myStack);
+            break;
+        }
+        case '-':
+        {
+            push(firstOperand - secondOperand, myStack);
+            break;
+        }
+        case '*':
+        {
+            push(firstOperand * secondOperand, myStack);
+            break;
+        }
+        case '/':
+        {
+            push(firstOperand / secondOperand, myStack);
+            break;
+        }
+    }
+}
 
 int main() {
     char postfixSet[maxLength];
@@ -16,41 +49,15 @@ int main() {
     int stringLength = strlen(postfixSet);
     for (int i = 0; i < stringLength; ++i)
     {
-        switch (postfixSet[i])
+        if (isDigit(postfixSet[i]))
         {
-            case '+':
-            {
-                int secondOperand = pop(myStack);
-                int firstOperand = pop(myStack);
-                push(firstOperand + secondOperand, myStack);
-                break;
-            }
-            case '-':
-            {
-                int secondOperand = pop(myStack);
-                int firstOperand = pop(myStack);
-                push(firstOperand - secondOperand, myStack);
-                break;
-            }
-            case '*':
-            {
-                int secondOperand = pop(myStack);
-                int firstOperand = pop(myStack);
-                push(firstOperand * secondOperand, myStack);
-                break;
-            }
-            case '/':
-            {
-                int secondOperand = pop(myStack);
-                int firstOperand = pop(myStack);
-                push((int)(firstOperand / secondOperand), myStack);
-                break;
-            }
-            default :
-            {
-                push(postfixSet[i] - (int)'0', myStack);
-                break;
-            }
+            push(postfixSet[i] - (int)'0', myStack);
+        }
+        else
+        {
+            int secondOperand = pop(myStack);
+            int firstOperand = pop(myStack);
+            toCount(firstOperand, secondOperand, postfixSet[i], myStack);
         }
     }
     printf("Result = %d", pop(myStack));
