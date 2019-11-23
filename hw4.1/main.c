@@ -11,7 +11,8 @@ int safePosition(List* list, int step)
     return getValue(1, list);
 }
 
-int main() {
+int main()
+{
     int size = 0;
     int step = 0;
     printf("Insert number of soldiers\n");
