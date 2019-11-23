@@ -74,14 +74,7 @@ int main()
     {
         for (int j = 0; j < length; ++j)
         {
-            if (array[i][j] >= 10)
-            {
-                printf("%d\t", array[i][j]);
-            }
-            else
-            {
-                printf("%d\t", array[i][j]);
-            }
+            printf("%d\t", array[i][j]);
         }
         printf("\n");
     }
