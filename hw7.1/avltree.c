@@ -1,4 +1,7 @@
+#include <stdio.h>
 #include "avltree.h"
+#include <stdbool.h>
+#include <stdlib.h>
 
 struct Node
 {
@@ -7,6 +10,17 @@ struct Node
     Node *left;
     Node *right;
 };
+
+Node* createNode(int value)
+{
+    Node *root;
+    root->left = NULL;
+    root->right = NULL;
+    root->value = value;
+    return root;
+}
+
+
 
 int height(Node *node)
 {
@@ -61,4 +75,71 @@ Node* balance(Node *root)
         return rotateRight(root);
     }
     return root;
+}
+
+void add(int value, Node *root)
+{
+    Node *newNode = root;
+    Node *previousNode = NULL;
+    while (true)
+    {
+        if (value > newNode->value)
+        {
+            if (newNode->right == NULL)
+            {
+                newNode->right = createNode(value);
+                balance(previousNode);
+                return;
+            }
+            else
+            {
+                previousNode = newNode;
+                newNode = newNode->right;
+            }
+        }
+        else
+        {
+            if (newNode->left == NULL)
+            {
+                newNode->left = createNode(value);
+                balance(previousNode);
+                return;
+            }
+            else
+            {
+                previousNode = newNode;
+                newNode = newNode->left;
+            }
+        }
+    }
+}
+
+int deleteNode(Node *node)
+{
+    if (node == NULL)
+    {
+        return 0;
+    }
+    else if (node->left == NULL && node->right == NULL)
+    {
+        int returnedValue = node->value;
+        free(node);
+        return returnedValue;
+    }
+    else if (node->right != NULL)
+    {
+        while (node->left != NULL)
+        {
+            node = node->left;
+        }
+        int returnedValue = node->value;
+        free(node);
+        return returnedValue;
+    }
+    else
+    {
+        int returnedValue = node->value;
+        free(node);
+        return returnedValue;
+    }
 }
