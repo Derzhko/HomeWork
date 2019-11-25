@@ -1,8 +1,10 @@
-//
-// Created by Администратор on 24.11.2019.
-//
+#ifndef AVLTREE_H
+#define AVLTREE_H
 
-#ifndef HW7_1_AVLTREE_H
-#define HW7_1_AVLTREE_H
+typedef struct Node Node;
 
-#endif //HW7_1_AVLTREE_H
+int height(Node *node);
+int balanceFactor(Node *node);
+void updateHeight(Node *node);
+
+#endif //AVLTREE_H
