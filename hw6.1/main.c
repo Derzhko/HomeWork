@@ -32,7 +32,8 @@ void differentiationNumber(int *sign, int *exponent, double *fraction, unsigned 
                 if (j == 7)
                 {
                     *sign = (numberInBinaryCode[i] & (1 << 7)) ? 1 : 0;
-                } else
+                }
+                else
                 {
                     *exponent |= (numberInBinaryCode[i] & (1 << j)) << 4;
                 }
