@@ -112,7 +112,7 @@ int delete(int value, BinaryTree* tree)
 {
     if (tree->root == NULL)
     {
-        return NULL;
+        return (int)NULL;
     }
     else
     {
@@ -135,27 +135,67 @@ int delete(int value, BinaryTree* tree)
                 break;
             }
         }
+        int deletedValue = 0;
         if (child->leftChild == NULL && child->rightChild == NULL)
         {
-            int deletedValue = child->value;
+            if (parent->leftChild == child)
+            {
+                parent->leftChild = NULL;
+            }
+            else
+            {
+                parent->rightChild = NULL;
+            }
+            deletedValue = child->value;
             free(child);
-            return deletedValue;
         }
         else if (child->leftChild == NULL)
         {
-            int deletedValue = child->value;
-            BinaryTreeNode* deletedNode = child;
-            child = child->rightChild;
-            free(deletedNode);
-            return deletedValue;
+            if (parent->leftChild == child)
+            {
+                parent->leftChild = child->rightChild;
+            }
+            else
+            {
+                parent->rightChild = child->rightChild;
+            }
+            deletedValue = child->value;
+            free(child);
         }
         else if (child->rightChild == NULL)
         {
-            int deletedValue = child->value;
-            BinaryTreeNode* deletedNode = child;
-            child = child->leftChild;
-            free(deletedNode);
-            return deletedValue;
+            if (parent->leftChild == child)
+            {
+                parent->leftChild = child->leftChild;
+            }
+            else
+            {
+                parent->rightChild = child->leftChild;
+            }
+            deletedValue = child->value;
+            free(child);
         }
+        else
+        {
+            deletedValue = child->value;
+            BinaryTreeNode *minimumRightChild = child->rightChild;
+            BinaryTreeNode *parentRightChild = child;
+            while(minimumRightChild->leftChild != NULL)
+            {
+                parentRightChild = minimumRightChild;
+                minimumRightChild = minimumRightChild->leftChild;
+            }
+            child->value = minimumRightChild->value;
+            if (parentRightChild->leftChild == minimumRightChild)
+            {
+                parentRightChild->leftChild = NULL;
+            }
+            else
+            {
+                parentRightChild->rightChild = NULL;
+            }
+            free(minimumRightChild);
+        }
+        return deletedValue;
     }
 }
