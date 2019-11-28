@@ -71,6 +71,7 @@ int main()
     int exponent = 0;
     double fraction = 0.0;
     differentiationNumber(&sign, &exponent, &fraction, numberInBinaryCode);
+    printf("Number in exponential form\n");
     printf("%c%f*2^%d", (sign == 1) ? '-' : '+', fraction, exponent - 1023);
     return 0;
 }
