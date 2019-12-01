@@ -194,39 +194,39 @@ int delete(int value, BinaryTree *tree)
     return deletedValue;
 }
 
-void printIncrementalValues1(BinaryTreeNode *node)
+void printIncrementalValuesRealization(BinaryTreeNode *node)
 {
     if (node == NULL)
     {
         return;
     }
-    printIncrementalValues1(node->leftChild);
+    printIncrementalValuesRealization(node->leftChild);
     printf("%d ", node->value);
-    printIncrementalValues1(node->rightChild);
+    printIncrementalValuesRealization(node->rightChild);
 }
 
 void printIncrementalValues(BinaryTree *tree)
 {
-    printIncrementalValues1(tree->root);
+    printIncrementalValuesRealization(tree->root);
 }
 
-void printDecrementValues1(BinaryTreeNode *node)
+void printDecrementValuesRealization(BinaryTreeNode *node)
 {
     if (node == NULL)
     {
         return;
     }
-    printDecrementValues1(node->rightChild);
+    printDecrementValuesRealization(node->rightChild);
     printf("%d ", node->value);
-    printDecrementValues1(node->leftChild);
+    printDecrementValuesRealization(node->leftChild);
 }
 
 void printDecrementValues(BinaryTree *tree)
 {
-    printDecrementValues1(tree->root);
+    printDecrementValuesRealization(tree->root);
 }
 
-void printAlternativeView1(BinaryTreeNode *node)
+void printAlternativeViewRealization(BinaryTreeNode *node)
 {
     if (node == NULL)
     {
@@ -234,13 +234,13 @@ void printAlternativeView1(BinaryTreeNode *node)
         return;
     }
     printf("(%d ", node->value);
-    printAlternativeView1(node->rightChild);
+    printAlternativeViewRealization(node->rightChild);
     printf(" ");
-    printAlternativeView1(node->leftChild);
+    printAlternativeViewRealization(node->leftChild);
     printf(")");
 }
 
 void printAlternativeView(BinaryTree *tree)
 {
-    printAlternativeView1(tree->root);
+    printAlternativeViewRealization(tree->root);
 }
