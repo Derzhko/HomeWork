@@ -74,7 +74,7 @@ BinaryTreeNode* balance(BinaryTreeNode* node)
 
     if (balanceFactor(node) == 2)
     {
-        if(balanceFactor(node->rightChild < 0))
+        if(balanceFactor(node->rightChild) < 0)
         {
             node->rightChild = rotateRight(node->rightChild);
         }
@@ -108,9 +108,9 @@ void add(int value, BinaryTree *tree)
         {
             if (value > parent->value)
             {
+                pivot = parent;
                 if (parent->rightChild != NULL)
                 {
-                    pivot = parent;
                     parent = parent->rightChild;
                 }
                 else
@@ -122,9 +122,9 @@ void add(int value, BinaryTree *tree)
             }
             else if (value < parent->value)
             {
+                pivot = parent;
                 if (parent->leftChild != NULL)
                 {
-                    pivot = parent;
                     parent = parent->leftChild;
                 }
                 else
