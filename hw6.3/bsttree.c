@@ -104,17 +104,58 @@ bool search(int value, BinaryTree *tree)
     }
 }
 
+void deleteNodeWithEmptyLeftChild(BinaryTree *tree, BinaryTreeNode *parent, BinaryTreeNode *child)
+{
+    if (child == tree->root)
+    {
+        tree->root = child->rightChild;
+    }
+    else if (parent->leftChild == child)
+    {
+        parent->leftChild = child->rightChild;
+    }
+    else
+    {
+        parent->rightChild = child->rightChild;
+    }
+}
+
+void deleteNodeWithEmptyRightChild(BinaryTree *tree, BinaryTreeNode *parent, BinaryTreeNode *child)
+{
+    if (child == tree->root)
+    {
+        tree->root = child->leftChild;
+    }
+    else if (parent->leftChild == child)
+    {
+        parent->leftChild = child->leftChild;
+    }
+    else
+    {
+        parent->rightChild = child->leftChild;
+    }
+}
+
+void searchMinimumRightChild(BinaryTreeNode *minimumRightChild, BinaryTreeNode *parentRightChild)
+{
+    while (minimumRightChild->leftChild != NULL)
+    {
+        parentRightChild = minimumRightChild;
+        minimumRightChild = minimumRightChild->leftChild;
+    }
+}
+
 int delete(int value, BinaryTree *tree)
 {
     BinaryTreeNode *child = tree->root;
     BinaryTreeNode *parent = malloc(sizeof(BinaryTreeNode));
-    while (true)
+    if (child == NULL)
     {
-        if (child == NULL)
-        {
-            printf("ERROR: there is no such element\n");
-            return 0;
-        }
+        printf("ERROR: there is no such element\n");
+        return 0;
+    }
+    while (child->value != value)
+    {
         if (value > child->value)
         {
             parent = child;
@@ -125,15 +166,20 @@ int delete(int value, BinaryTree *tree)
             parent = child;
             child = child->leftChild;
         }
-        else
+        if (child == NULL)
         {
-            break;
+            printf("ERROR: there is no such element\n");
+            return 0;
         }
     }
     int deletedValue = 0;
     if (child->leftChild == NULL && child->rightChild == NULL)
     {
-        if (parent->leftChild == child)
+        if (child == tree->root)
+        {
+            tree->root = NULL;
+        }
+        else if (parent->leftChild == child)
         {
             parent->leftChild = NULL;
         }
@@ -146,27 +192,13 @@ int delete(int value, BinaryTree *tree)
     }
     else if (child->leftChild == NULL)
     {
-        if (parent->leftChild == child)
-        {
-            parent->leftChild = child->rightChild;
-        }
-        else
-        {
-            parent->rightChild = child->rightChild;
-        }
+        deleteNodeWithEmptyLeftChild(tree, parent, child);
         deletedValue = child->value;
         free(child);
     }
     else if (child->rightChild == NULL)
     {
-        if (parent->leftChild == child)
-        {
-            parent->leftChild = child->leftChild;
-        }
-        else
-        {
-            parent->rightChild = child->leftChild;
-        }
+        deleteNodeWithEmptyRightChild(tree, parent, child);
         deletedValue = child->value;
         free(child);
     }
@@ -175,11 +207,7 @@ int delete(int value, BinaryTree *tree)
         deletedValue = child->value;
         BinaryTreeNode *minimumRightChild = child->rightChild;
         BinaryTreeNode *parentRightChild = child;
-        while (minimumRightChild->leftChild != NULL)
-        {
-            parentRightChild = minimumRightChild;
-            minimumRightChild = minimumRightChild->leftChild;
-        }
+        searchMinimumRightChild(minimumRightChild, parentRightChild);
         child->value = minimumRightChild->value;
         if (parentRightChild->leftChild == minimumRightChild)
         {

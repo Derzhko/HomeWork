@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "bsttree.h"
-
+#include <stdlib.h>
 int main()
 {
     BinaryTree *myTree = createTree();
@@ -21,7 +21,7 @@ int main()
             case 1:
                 printf("insert value\n");
                 scanf("%d", &value);
-                if (value == NULL)
+                if (value != 0 && value == NULL)
                 {
                     printf("Insert incorrect value\n");
                 }
@@ -33,7 +33,7 @@ int main()
             case 2:
                 printf("insert value\n");
                 scanf("%d", &value);
-                if (value == NULL)
+                if (value != 0 && value == NULL)
                 {
                     printf("Insert incorrect value\n");
                 }
@@ -45,7 +45,7 @@ int main()
             case 3:
                 printf("insert value\n");
                 scanf("%d", &value);
-                if (value == NULL)
+                if (value != 0 && value == NULL)
                 {
                     printf("Insert incorrect value\n");
                 }
@@ -71,6 +71,7 @@ int main()
                 printf("\n");
                 break;
             case 7:
+                free(myTree);
                 return 0;
         }
     }
