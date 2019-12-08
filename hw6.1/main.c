@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 
 const int lengthOfFraction = 52;
 
@@ -19,6 +20,7 @@ void differentiationNumber(int *sign, int *exponent, double *fraction, unsigned 
     *exponent = 0;
     int fractionInBite[lengthOfFraction];
     int index = 0;
+    bool isZero = true;
     for (int i = 0; i < lengthOfFraction; ++i)
     {
         fractionInBite[i] = 0;
@@ -27,6 +29,7 @@ void differentiationNumber(int *sign, int *exponent, double *fraction, unsigned 
     {
         for (int j = 7; j >= 0; --j)
         {
+            isZero = numberInBinaryCode[i] & (1 << j) ? false : isZero;
             if (i == 7)
             {
                 if (j == 7)
@@ -57,6 +60,11 @@ void differentiationNumber(int *sign, int *exponent, double *fraction, unsigned 
             }
         }
     }
+    if (isZero)
+    {
+        *exponent = 1023;
+        return;
+    }
     *fraction = convertingArrayToDouble(fractionInBite);
 }
 
@@ -71,6 +79,7 @@ int main()
     int exponent = 0;
     double fraction = 0.0;
     differentiationNumber(&sign, &exponent, &fraction, numberInBinaryCode);
+    free(numberInBinaryCode);
     printf("Number in exponential form\n");
     printf("%c%f*2^%d", (sign == 1) ? '-' : '+', fraction, exponent - 1023);
     return 0;
