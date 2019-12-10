@@ -1,30 +1,32 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-const int maxLength = 120;
-
 int main()
 {
 
-    FILE *Kojima = fopen("./kojimageniy.txt", "r");
+    FILE *Kojima = fopen("../kojimageniy.txt", "r");
     if (Kojima == NULL)
     {
         printf("File is not open");
         return 0;
     }
     int numberOfLines = 0;
-    char line[maxLength];
-    while (fgets(line, maxLength, Kojima) != NULL)
+    char charInFile = '\0';
+    bool isFirstNonSpaceChar = false;
+    do
     {
-        for (int i = 0; line[i] != '\n'; ++i)
+        charInFile = fgetc(Kojima);
+        if (charInFile != '\0' && charInFile != '\t' && charInFile != ' ' && charInFile != '\n')
         {
-            if (line[i] != '\0' && line[i] != '\t' && line[i] != ' ' )
-            {
-                ++numberOfLines;
-                break;
-            }
+            isFirstNonSpaceChar = true;
+        }
+        if (charInFile == '\n' && isFirstNonSpaceChar)
+        {
+            numberOfLines++;
+            isFirstNonSpaceChar = false;
         }
     }
+    while (charInFile != EOF);
     printf("number of non-empty lines in file: %d", numberOfLines);
     return 0;
 }
