@@ -4,14 +4,15 @@ const int arrayMaxLength = 20;
 
 void moveZerosToEnd(int *numbers, int arrayLength)
 {
-    int index = arrayLength - 1;
-    for (int i = arrayLength - 1; i >= 0; --i)
+    for (int i = 0; i < arrayLength; ++i)
     {
         if (numbers[i] == 0)
         {
-            numbers[i] = numbers[index];
-            numbers[index] = 0;
-            --index;
+            for (int j = i; j < arrayLength - 1; ++j)
+            {
+                numbers[j] = numbers[j + 1];
+            }
+            numbers[arrayLength - 1] = 0;
         }
     }
 }
