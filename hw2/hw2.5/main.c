@@ -21,9 +21,9 @@ int main()
         charCounter[i] = 0;
     }
     printf("Insert first string\n");
-    scanf("%s", string);
+    fgets(string, stringMaxLength, stdin);
     printf("Insert second string\n");
-    scanf("%s", subString);
+    fgets(subString, stringMaxLength, stdin);
     const int stringLength = strlen(string);
     const int subStringLength = strlen(subString);
 
@@ -34,16 +34,15 @@ int main()
 
     for (int i = 0; i < subStringLength; ++i)
     {
-        if (charCounter[subString[i] - 'a'] != 0)
-        {
             --charCounter[subString[i] - 'a'];
-        }
-        else
+    }
+    for (int i = 0; i < arrayLength; ++i)
+    {
+        if (charCounter[i] != 0)
         {
             isPossible = false;
         }
     }
-
     if (isPossible)
     {
         printf("Is possible");
@@ -52,6 +51,5 @@ int main()
     {
         printf("Is impossible");
     }
-
     return 0;
 }
