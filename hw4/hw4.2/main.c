@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "list.c"
 
-const int maxLength = 50;
-
-void add(FILE *file)
+void addToList(List *list)
 {
-    fclose(file);
-    file = fopen("../phones.txt", "a+");
+    //fclose(file);
+    //file = fopen("../phones.txt", "a+");
     char name[maxLength];
     char phone[maxLength];
     printf("Insert name\n");
-    scanf("%s", name);
+    fgets(name, maxLength, stdin);
     printf("Insert phone\n");
-    scanf("%s", phone);
-    fputs(name, file);
-    fputc('\n', file);
-    fputs(phone, file);
-    fputc('\n', file);
+    fgets(phone, maxLength, stdin);
+    add(list, name, phone);
+    //fputs(name, file);
+    //fputc('\n', file);
+    //fputs(phone, file);
+    //fputc('\n', file);
 }
 
 void findPhone(FILE *file)
@@ -78,49 +78,24 @@ int main()
 {
     FILE *file;
     file = fopen("../phones.txt", "a+");
+    char name[maxLength];
+    char phone[maxLength];
+    for (int i = 0; i < maxLength; ++i)
+    {
+        name[i] = '\0';
+        phone[i] = '\0';
+    }
     if (file == NULL)
     {
         printf("File is close");
         return 0;
     }
-    while (true)
+    List *list = createList();
+    while (fgets(name, maxLength, file) != NULL)
     {
-        int value = 0;
-        printf("0 - exit\n");
-        printf("1 - add an entry (name and phone number)\n");
-        printf("2 - find phone by name\n");
-        printf("3 - find the name on the phone\n");
-        printf("4 - save current data to a file\n");
-        scanf("%d", &value);
-        switch (value)
-        {
-            case 1 :
-            {
-                add(file);
-                break;
-            }
-            case 2 :
-            {
-                findPhone(file);
-                break;
-            }
-            case 3 :
-            {
-                findTheName(file);
-                break;
-            }
-            case 4 :
-            {
-                fclose(file);
-                file = fopen("../phones.txt", "a+");
-                break;
-            }
-            case 0 :
-            {
-                fclose(file);
-                return 0;
-            }
-        }
+        fgets(phone, maxLength, file);
+        add(list, name, phone);
     }
+
     return 0;
 }
