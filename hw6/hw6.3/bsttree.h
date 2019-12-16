@@ -8,6 +8,7 @@ typedef struct BinaryTreeNode BinaryTreeNode;
 
 BinaryTree* createTree();
 
+void deleteTree(BinaryTree* tree);
 void add(int value, BinaryTree* tree);
 int delete(int value, BinaryTree* tree);
 bool search(int value, BinaryTree* tree);

@@ -30,6 +30,24 @@ BinaryTreeNode *createNode(int value)
     return newNode;
 }
 
+void deleteNode(BinaryTreeNode* node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+    deleteNode(node->rightChild);
+    deleteNode(node->leftChild);
+    free(node);
+    return;
+}
+
+void deleteTree(BinaryTree* tree)
+{
+    deleteNode(tree->root);
+    free(tree);
+}
+
 void add(int value, BinaryTree *tree)
 {
     if (tree->root == NULL)

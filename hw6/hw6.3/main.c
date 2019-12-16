@@ -71,7 +71,7 @@ int main()
                 printf("\n");
                 break;
             case 7:
-                free(myTree);
+                deleteTree(myTree);
                 return 0;
         }
     }
