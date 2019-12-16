@@ -27,14 +27,33 @@ BinaryTreeNode *createNode(int value)
 {
     BinaryTreeNode *newNode = malloc(sizeof(BinaryTreeNode));
     newNode->value = value;
+    newNode->height = 1;
     newNode->leftChild = NULL;
     newNode->rightChild = NULL;
     return newNode;
 }
 
+void deleteNode(BinaryTreeNode* node)
+{
+    if (node == NULL)
+    {
+        return;
+    }
+    deleteNode(node->rightChild);
+    deleteNode(node->leftChild);
+    free(node);
+    return;
+}
+
+void deleteTree(BinaryTree* tree)
+{
+    deleteNode(tree->root);
+    free(tree);
+}
+
 int height(BinaryTreeNode* node)
 {
-    return node ? node->height : 0;
+    return node != NULL ? node->height : 0;
 }
 
 int balanceFactor(BinaryTreeNode* node)
@@ -46,7 +65,7 @@ void updateHeight(BinaryTreeNode* node)
 {
     int rightHeight = height(node->rightChild);
     int leftHeight = height(node->leftChild);
-    node->height = (rightHeight > leftHeight ? rightHeight : leftHeight) + 1;
+    node->height = (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
 }
 
 BinaryTreeNode* rotateRight(BinaryTreeNode* root)
@@ -66,19 +85,19 @@ BinaryTreeNode* rotateLeft(BinaryTreeNode* root)
     pivot->leftChild = root;
     updateHeight(root);
     updateHeight(pivot);
+    return pivot;
 }
 
 BinaryTreeNode* balance(BinaryTreeNode* node)
 {
     updateHeight(node);
-
     if (balanceFactor(node) == 2)
     {
         if(balanceFactor(node->rightChild) < 0)
         {
             node->rightChild = rotateRight(node->rightChild);
         }
-        return(rotateLeft(node));
+        return rotateLeft(node);
     }
 
     if (balanceFactor(node) == -2)
@@ -89,53 +108,37 @@ BinaryTreeNode* balance(BinaryTreeNode* node)
         }
         return rotateRight(node);
     }
-
     return node;
 }
 
-void add(int value, BinaryTree *tree)
+BinaryTreeNode* addElement(int value, BinaryTreeNode *newNode)
+{
+    if (newNode == NULL)
+    {
+        return createNode(value);
+    }
+    if (value < newNode->value)
+    {
+        newNode->leftChild = addElement(value, newNode->leftChild);
+    }
+    else
+    {
+        newNode->rightChild = addElement(value, newNode->rightChild);
+    }
+    return balance(newNode);
+}
+
+BinaryTreeNode* add(int value, BinaryTree* tree)
 {
     if (tree->root == NULL)
     {
         tree->root = createNode(value);
-        return;
     }
     else
     {
-        BinaryTreeNode *parent = tree->root;
-        BinaryTreeNode *pivot = malloc(sizeof(BinaryTreeNode));
-        while (true)
-        {
-            if (value > parent->value)
-            {
-                pivot = parent;
-                if (parent->rightChild != NULL)
-                {
-                    parent = parent->rightChild;
-                }
-                else
-                {
-                    parent->rightChild = createNode(value);
-                    balance(pivot);
-                    return;
-                }
-            }
-            else if (value < parent->value)
-            {
-                pivot = parent;
-                if (parent->leftChild != NULL)
-                {
-                    parent = parent->leftChild;
-                }
-                else
-                {
-                    parent->leftChild = createNode(value);
-                    balance(pivot);
-                    return;
-                }
-            }
-        }
+        tree->root = addElement(value, tree->root);
     }
+    return tree->root;
 }
 
 bool search(int value, BinaryTree *tree)
@@ -172,94 +175,55 @@ bool search(int value, BinaryTree *tree)
     }
 }
 
-int delete(int value, BinaryTree *tree)
+BinaryTreeNode* findMinimumValue(BinaryTreeNode* node)
 {
-    BinaryTreeNode *child = tree->root;
-    BinaryTreeNode *parent = malloc(sizeof(BinaryTreeNode));
-    while (true)
+    return node->leftChild != NULL ? findMinimumValue(node->leftChild) : node;
+}
+
+BinaryTreeNode* removeMinimumValue(BinaryTreeNode* node)
+{
+    if (node->leftChild == NULL)
     {
-        if (child == NULL)
-        {
-            printf("ERROR: there is no such element\n");
-            return 0;
-        }
-        if (value > child->value)
-        {
-            parent = child;
-            child = child->rightChild;
-        }
-        else if (value < child->value)
-        {
-            parent = child;
-            child = child->leftChild;
-        }
-        else
-        {
-            break;
-        }
+        return node->rightChild;
     }
-    int deletedValue = 0;
-    if (child->leftChild == NULL && child->rightChild == NULL)
+    node->leftChild = removeMinimumValue(node->leftChild);
+    return balance(node);
+}
+
+BinaryTreeNode* removeElement(int value, BinaryTreeNode* node)
+{
+    if (node == NULL)
     {
-        if (parent->leftChild == child)
-        {
-            parent->leftChild = NULL;
-        }
-        else
-        {
-            parent->rightChild = NULL;
-        }
-        deletedValue = child->value;
-        free(child);
+        return NULL;
     }
-    else if (child->leftChild == NULL)
+    if (value < node->value)
     {
-        if (parent->leftChild == child)
-        {
-            parent->leftChild = child->rightChild;
-        }
-        else
-        {
-            parent->rightChild = child->rightChild;
-        }
-        deletedValue = child->value;
-        free(child);
+        node->leftChild = removeElement(value, node->leftChild);
     }
-    else if (child->rightChild == NULL)
+    else if (value > node->value)
     {
-        if (parent->leftChild == child)
-        {
-            parent->leftChild = child->leftChild;
-        }
-        else
-        {
-            parent->rightChild = child->leftChild;
-        }
-        deletedValue = child->value;
-        free(child);
+        node->rightChild = removeElement(value, node->rightChild);
     }
     else
     {
-        deletedValue = child->value;
-        BinaryTreeNode *minimumRightChild = child->rightChild;
-        BinaryTreeNode *parentRightChild = child;
-        while (minimumRightChild->leftChild != NULL)
+        BinaryTreeNode* leftNode = node->leftChild;
+        BinaryTreeNode* rightNode = node->rightChild;
+        free(node);
+        if (rightNode == NULL)
         {
-            parentRightChild = minimumRightChild;
-            minimumRightChild = minimumRightChild->leftChild;
+            return leftNode;
         }
-        child->value = minimumRightChild->value;
-        if (parentRightChild->leftChild == minimumRightChild)
-        {
-            parentRightChild->leftChild = NULL;
-        }
-        else
-        {
-            parentRightChild->rightChild = NULL;
-        }
-        free(minimumRightChild);
+        BinaryTreeNode* minimum = findMinimumValue(rightNode);
+        minimum->rightChild = removeMinimumValue(rightNode);
+        minimum->leftChild = leftNode;
+        return balance(minimum);
     }
-    return deletedValue;
+    return balance(node);
+}
+
+void delete(int value, BinaryTree* tree)
+{
+    tree->root = removeElement(value, tree->root);
 }
 
 void printIncrementalValuesRealization(BinaryTreeNode *node)

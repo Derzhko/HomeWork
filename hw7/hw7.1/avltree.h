@@ -6,9 +6,10 @@ typedef struct BinaryTree BinaryTree;
 typedef struct BinaryTreeNode BinaryTreeNode;
 
 BinaryTree* createTree();
+void deleteTree(BinaryTree* tree);
 
-void add(int value, BinaryTree* tree);
-int delete(int value, BinaryTree* tree);
+BinaryTreeNode* add(int value, BinaryTree* tree);
+void delete(int value, BinaryTree* tree);
 bool search(int value, BinaryTree* tree);
 
 void printIncrementalValues(BinaryTree* tree);
