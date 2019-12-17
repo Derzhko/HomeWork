@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "avltree.h"
+
 int main()
 {
     BinaryTree *myTree = createTree();
@@ -18,6 +19,7 @@ int main()
         switch (number)
         {
             case 1:
+            {
                 printf("insert value\n");
                 scanf("%d", &value);
                 if (value != 0 && value == NULL)
@@ -29,7 +31,9 @@ int main()
                     add(value, myTree);
                 }
                 break;
+            }
             case 2:
+            {
                 printf("insert value\n");
                 scanf("%d", &value);
                 if (value != 0 && value == NULL)
@@ -41,7 +45,9 @@ int main()
                     delete(value, myTree);
                 }
                 break;
+            }
             case 3:
+            {
                 printf("insert value\n");
                 scanf("%d", &value);
                 if (value != 0 && value == NULL)
@@ -54,24 +60,33 @@ int main()
                     printf(search(value, myTree) ? "YES\n" : "NO\n");
                 }
                 break;
+            }
             case 4:
+            {
                 printf("Output values in ascending order\n");
                 printIncrementalValues(myTree);
                 printf("\n");
                 break;
+            }
             case 5:
+            {
                 printf("Output values in descending order\n");
                 printDecrementValues(myTree);
                 printf("\n");
                 break;
+            }
             case 6:
+            {
                 printf("Output values in alternative format\n");
                 printAlternativeView(myTree);
                 printf("\n");
                 break;
+            }
             case 7:
+            {
                 deleteTree(myTree);
                 return 0;
+            }
         }
     }
 }

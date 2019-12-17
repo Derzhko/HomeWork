@@ -93,7 +93,7 @@ BinaryTreeNode* balance(BinaryTreeNode* node)
     updateHeight(node);
     if (balanceFactor(node) == 2)
     {
-        if(balanceFactor(node->rightChild) < 0)
+        if (balanceFactor(node->rightChild) < 0)
         {
             node->rightChild = rotateRight(node->rightChild);
         }
