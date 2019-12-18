@@ -54,3 +54,46 @@ String* concat(String* string1, String* string2)
     deleteString(string2);
     return resultString;
 }
+
+bool isEqual(String* string1, String* string2)
+{
+    int lengthOfString1 = strlen(string1->set);
+    int lengthOfString2 = strlen(string2->set);
+    int maxLength = lengthOfString1 > lengthOfString2 ? lengthOfString1 : lengthOfString2;
+    for (int i = 0; i < maxLength; i++)
+    {
+        if (string1->set[i] != string2->set[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int lengthOfString(String* string)
+{
+    if (string == NULL)
+    {
+        return 0;
+    }
+    int length = 0;
+    while (string->set[length] != '\0')
+    {
+        ++length;
+    }
+    return length;
+}
+
+bool isEmpty(String* string)
+{
+    if (string == NULL)
+    {
+        return true;
+    }
+    if (string->set[0] == '\0')
+    {
+        return true;
+    }
+    return false;
+}
+
