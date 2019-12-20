@@ -71,15 +71,13 @@ void differentiationNumber(int *sign, int *exponent, double *fraction, unsigned 
 int main()
 {
     double number = 0.0;
-    unsigned char *numberInBinaryCode = malloc(sizeof(double));
-    numberInBinaryCode = (unsigned char *) &number;
+    unsigned char *numberInBinaryCode = (unsigned char *) &number;
     printf("Insert number\n");
-    scanf("%lf", &number);
+    scanf("%lf", numberInBinaryCode);
     int sign = 0;
     int exponent = 0;
     double fraction = 0.0;
     differentiationNumber(&sign, &exponent, &fraction, numberInBinaryCode);
-    free(numberInBinaryCode);
     printf("Number in exponential form\n");
     printf("%c%f*2^%d", (sign == 1) ? '-' : '+', fraction, exponent - 1023);
     return 0;
