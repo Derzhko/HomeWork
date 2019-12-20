@@ -13,5 +13,6 @@ bool isEmpty(struct Stack* stack);
 bool push(int value, struct Stack *stack);
 int pop(struct Stack *stack);
 int lookStackElement(struct Stack *stack);
+void deleteStack(Stack* stack);
 
 #endif //STACK_H

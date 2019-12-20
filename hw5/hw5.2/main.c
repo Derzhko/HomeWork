@@ -61,5 +61,6 @@ int main() {
         }
     }
     printf("Result = %d", pop(myStack));
+    deleteStack(myStack);
     return 0;
 }

@@ -55,3 +55,19 @@ int lookStackElement(struct Stack *stack)
     }
     return stack->first->value;
 }
+
+void deleteStackElement(StackElement* element)
+{
+    if (element == NULL)
+    {
+        return;
+    }
+    deleteStackElement(element->next);
+    free(element);
+}
+
+void deleteStack(Stack* stack)
+{
+    deleteStackElement(stack->first);
+    free(stack);
+}
