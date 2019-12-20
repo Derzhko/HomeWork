@@ -81,5 +81,6 @@ int main() {
         addToPostfixSet(postfixSet, pop(myStack), &stringTale);
     }
     printf("Postfix string %s", postfixSet);
+    deleteStack(myStack);
     return 0;
 }
