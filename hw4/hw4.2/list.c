@@ -101,6 +101,8 @@ void fieldListByFile(FILE *file, List *list)
         add(list, name, phone);
     }
     list->pointElement = list->tail;
+    free(name);
+    free(phone);
 }
 
 void fieldFileByList(FILE *file, List *list)
@@ -123,4 +125,22 @@ void fieldFileByList(FILE *file, List *list)
         element = element->next;
     }
     list->pointElement = list->tail;
+}
+
+void deleteListElement(ListElement* element)
+{
+    if (element == NULL)
+    {
+        return;
+    }
+    deleteListElement(element->next);
+    free(element->name);
+    free(element->phone);
+    free(element);
+}
+
+void deleteList(List* list)
+{
+    deleteListElement(list->head);
+    free(list);
 }

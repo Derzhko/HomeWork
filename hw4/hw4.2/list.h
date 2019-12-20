@@ -12,4 +12,5 @@ char* findByPhone(List* list, char *phone);
 char* findByName(List* list, char *name);
 void fieldListByFile(FILE *file, List* list);
 void fieldFileByList(FILE *file, List* list);
+void deleteList(List* list);
 #endif //HW4_2_LIST_H

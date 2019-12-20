@@ -23,6 +23,8 @@ void addToList(List *list)
     name[strlen(name) - 1] = '\0';
     phone[strlen(phone) - 1] = '\0';
     add(list, name, phone);
+    free(name);
+    free(phone);
 }
 
 void findPhone(List* list)
@@ -46,6 +48,8 @@ void findPhone(List* list)
     {
         printf("Phone number is not found\n");
     }
+    free(name);
+    free(phone);
 }
 
 void findName(List* list)
@@ -69,6 +73,8 @@ void findName(List* list)
     {
         printf("Member is not found\n");
     }
+    free(name);
+    free(phone);
 }
 
 int main()
@@ -120,6 +126,7 @@ int main()
             case 0 :
             {
                 fclose(file);
+                deleteList(list);
                 return 0;
             }
         }
