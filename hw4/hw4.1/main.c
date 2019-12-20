@@ -21,5 +21,6 @@ int main()
     printf("Insert number of killed soldier\n");
     scanf("%d", &step);
     printf("safe position is %d\n", safePosition(list, step));
+    deleteList(list);
     return 0;
 }

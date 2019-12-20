@@ -1,5 +1,6 @@
 #include "CircularList.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 struct ListElement
 {
@@ -55,7 +56,6 @@ void add(List* list)
 
 void delete(int position, List* list)
 {
-    --list->size;
     if (position == 1)
     {
         list->first = list->first->next;
@@ -78,6 +78,7 @@ void delete(int position, List* list)
         previousElement->next = deletedElement->next;
         free(deletedElement);
     }
+    --list->size;
 }
 
 int getValue(int position, List* list)
@@ -88,4 +89,21 @@ int getValue(int position, List* list)
         element = element->next;
     }
     return element->position;
+}
+
+void deleteListElement(ListElement* element, ListElement* listLast)
+{
+    if (element == listLast)
+    {
+        free(element);
+        return;
+    }
+    deleteListElement(element->next, listLast);
+    free(element);
+}
+
+void deleteList(List* list)
+{
+    deleteListElement(list->first, list->last);
+    free(list);
 }

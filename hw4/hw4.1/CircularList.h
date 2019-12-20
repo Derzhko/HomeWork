@@ -14,4 +14,6 @@ int size(List* list);
 
 int getValue(int position, List* list);
 
+void deleteList(List* list);
+
 #endif //LIST_H
