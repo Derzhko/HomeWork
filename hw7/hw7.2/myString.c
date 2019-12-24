@@ -14,7 +14,7 @@ String* createString(char* set)
     newString->lengthOfSet = 0;
     while (set[newString->lengthOfSet] != '\0')
     {
-        ++newString->lengthOfSet;
+        ++(newString->lengthOfSet);
     }
     newString->set = malloc(sizeof(char) * newString->lengthOfSet);
     newString->set = set;
@@ -34,8 +34,9 @@ int lengthOfString(String* string)
 String* clone(String* string)
 {
     String* cloneString = malloc(sizeof(String));
-    cloneString = malloc(sizeof(char) * lengthOfString(string->set));
-    for (int i = 0; i < lengthOfString(string->set); ++i)
+    cloneString->set = malloc(sizeof(char) * lengthOfString(string));
+    cloneString->lengthOfSet = lengthOfString(string);
+    for (int i = 0; i <= lengthOfString(string); ++i)
     {
         cloneString->set[i] = string->set[i];
     }
@@ -45,10 +46,15 @@ String* clone(String* string)
 String* concat(String* string1, String* string2)
 {
     String* resultString = malloc(sizeof(String));
-    int lengthOfString1 = lengthOfString(string1->set);
-    int lengthOfString2 = lengthOfString(string2->set);
+    int lengthOfString1 = lengthOfString(string1);
+    int lengthOfString2 = lengthOfString(string2);
     int resultLength = lengthOfString1 + lengthOfString2;
     resultString->set = malloc(sizeof(char) * resultLength);
+    resultString->lengthOfSet = resultLength;
+    for (int i = 0; i <= resultLength; ++i)
+    {
+        resultString->set[i] = '\0';
+    }
     for (int i = 0; i < resultLength; ++i)
     {
         if (i < lengthOfString1)
@@ -57,18 +63,17 @@ String* concat(String* string1, String* string2)
         }
         else
         {
-            resultString->set[i] = string2->set[i - lengthOfString2];
+            resultString->set[i] = string2->set[i - lengthOfString1];
         }
     }
     deleteString(string1);
-    deleteString(string2);
     return resultString;
 }
 
 bool isEqual(String* string1, String* string2)
 {
-    int lengthOfString1 = lengthOfString(string1->set);
-    int lengthOfString2 = lengthOfString(string2->set);
+    int lengthOfString1 = lengthOfString(string1);
+    int lengthOfString2 = lengthOfString(string2);
     int maxLength = lengthOfString1 > lengthOfString2 ? lengthOfString1 : lengthOfString2;
     for (int i = 0; i < maxLength; i++)
     {
