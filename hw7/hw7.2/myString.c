@@ -16,13 +16,17 @@ String* createString(char* set)
     {
         ++(newString->lengthOfSet);
     }
-    newString->set = malloc(sizeof(char) * newString->lengthOfSet);
-    newString->set = set;
+    newString->set = malloc(sizeof(char) * (newString->lengthOfSet + 1));
+    for (int i = 0; i <= newString->lengthOfSet; ++i)
+    {
+        newString->set[i] = set[i];
+    }
     return newString;
 }
 
 void deleteString(String* string)
 {
+    free(string->set);
     free(string);
 }
 

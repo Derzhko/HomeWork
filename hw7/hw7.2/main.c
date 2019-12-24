@@ -20,5 +20,7 @@ int main()
     string2 = cutOut(string1, 0, lengthOfString(string1) / 2);
     printf("%s\n", getS(string2));
     printf(isEqual(string1, string2) ? "true\n" : "false\n");
+    deleteString(string1);
+    deleteString(string2);
     return 0;
 }
