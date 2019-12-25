@@ -39,7 +39,12 @@ bool isName(char* set)
             }
             case 3:
             {
-                if (set[index] >= '1' && (int)set[index] <= '9')
+                if (set[index] >= '2' && (int)set[index] <= '9')
+                {
+                    state = 5;
+                    break;
+                }
+                if (set[index] == '1')
                 {
                     state = 4;
                     break;
