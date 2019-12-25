@@ -12,7 +12,7 @@ bool isName(char* set)
         {
             case 0:
             {
-                if ((int)set[index] - (int)'0' >= 0 && (int)set[index] - (int)'0' <= 9)
+                if (set[index] >= '0' && set[index] <= '9')
                 {
                     state = 1;
                     break;
@@ -21,7 +21,7 @@ bool isName(char* set)
             }
             case 1:
             {
-                if ((int)set[index] - (int)'0' >= 0 && (int)set[index] - (int)'0' <= 9)
+                if (set[index] >= '0' && set[index] <= '9')
                 {
                     state = 2;
                     break;
@@ -39,7 +39,7 @@ bool isName(char* set)
             }
             case 3:
             {
-                if ((int)set[index] - (int)'0' >= 1 && (int)set[index] - (int)'0' <= 9)
+                if (set[index] >= '1' && (int)set[index] <= '9')
                 {
                     state = 4;
                     break;
@@ -110,6 +110,13 @@ int main()
     }
     printf("Enter group name\n");
     fgets(set, stringLength, stdin);
+    for (int i = 0; i < stringLength; ++i)
+    {
+        if (set[i] == '\n')
+        {
+            set[i] = '\0';
+        }
+    }
     printf(isName(set) ? "Yes, this is the name of the mathmech's group" : "No, this is not the name of the mathmech's group");
     return 0;
 }
