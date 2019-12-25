@@ -17,5 +17,6 @@ int main()
     }
     insertionSort(myList);
     printValue(myList);
+    deleteList(myList);
     return 0;
 }

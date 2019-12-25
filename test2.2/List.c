@@ -31,8 +31,7 @@ void add(int value, List* list)
     }
     else
     {
-        ListElement* index = malloc(sizeof(ListElement));
-        index = list->first;
+        ListElement* index = list->first;
         while (index->next != NULL)
         {
             index = index->next;
@@ -74,40 +73,29 @@ int getValue(int position, List* list)
     return element->value;
 }
 
-void insertionSort(List* list)
+void implementationInsertionSort(ListElement* element)
 {
-    if (list->first == NULL)
+    if (element->next == NULL)
     {
         return;
     }
-    ListElement* boundaryElement = list->first->next;
-    ListElement* previousElement = malloc(sizeof(ListElement));
-    ListElement* previousBoundaryElement = list->first;
-    ListElement* element = malloc(sizeof(ListElement));
-    while (boundaryElement != NULL)
+    implementationInsertionSort(element->next);
+    if (element->value > element->next->value)
     {
-        element = list->first;
-        while (element != boundaryElement)
-        {
-            if (boundaryElement->value <= element->value && element == list->first)
-            {
-                previousBoundaryElement->next = boundaryElement->next;
-                boundaryElement->next = element;
-                list->first = boundaryElement;
-                break;
-            }
-            if (boundaryElement->value >= previousElement->value && boundaryElement->value <= element->value)
-            {
-                previousBoundaryElement->next = boundaryElement->next;
-                boundaryElement->next = element;
-                previousElement->next = boundaryElement;
-                break;
-            }
-            previousElement = element;
-            element = element->next;
-        }
-        boundaryElement = previousBoundaryElement->next;
+        int helper = element->value;
+        element->value = element->next->value;
+        element->next->value = helper;
+        implementationInsertionSort(element->next);
     }
+}
+
+void insertionSort(List* list)
+{
+    if (list->first == NULL || list->first->next == NULL)
+    {
+        return;
+    }
+    implementationInsertionSort(list->first);
 }
 
 void printValue(List* list)
@@ -120,4 +108,20 @@ void printValue(List* list)
         newElement = newElement->next;
     }
     printf("\n");
+}
+
+void deleteListElement(ListElement* element)
+{
+    if (element == NULL)
+    {
+        return;
+    }
+    deleteListElement(element->next);
+    free(element);
+}
+
+void deleteList(List* list)
+{
+    deleteListElement(list->first);
+    free(list);
 }

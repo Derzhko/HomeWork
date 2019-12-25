@@ -18,4 +18,6 @@ void insertionSort(List* list);
 
 void printValue(List* list);
 
+void deleteList(List* list);
+
 #endif //LIST_H
