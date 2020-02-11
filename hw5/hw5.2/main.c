@@ -10,6 +10,24 @@ bool isDigit(char number)
     return number >= '0' && number <= '9';
 }
 
+bool isValidString(char* postfixSet, int stringLength)
+{
+    int countOfDigit = 0;
+    int countOfOperation = 0;
+    for (int i = 0; i < stringLength; ++i)
+    {
+        if (isDigit(postfixSet[i]))
+        {
+            ++countOfDigit;
+        }
+        else
+        {
+            ++countOfOperation;
+        }
+    }
+    return countOfDigit - 1 == countOfOperation;
+}
+
 void toCount(int firstOperand, int secondOperand, char operation, Stack *myStack)
 {
     switch (operation)
@@ -37,7 +55,8 @@ void toCount(int firstOperand, int secondOperand, char operation, Stack *myStack
     }
 }
 
-int main() {
+int main()
+{
     char postfixSet[maxLength];
     for (int i = 0; i < maxLength; ++i)
     {
@@ -45,8 +64,14 @@ int main() {
     }
     Stack *myStack = createStack();
     printf("Insert your postfix string\n");
-    scanf("%s", postfixSet);
+    fgets(postfixSet, maxLength, stdin);
+    postfixSet[strlen(postfixSet) - 1] = '\0';
     int stringLength = strlen(postfixSet);
+    if (!isValidString(postfixSet, stringLength))
+    {
+        printf("Error: the string is invalid");
+        return 0;
+    }
     for (int i = 0; i < stringLength; ++i)
     {
         if (isDigit(postfixSet[i]))
