@@ -42,6 +42,7 @@ int main() {
             if (!isEqualOperation(infixSet[i + 1]))
             {
                 printf("Error: there are not enough binary operations");
+                deleteStack(myStack);
                 return 0;
             }
         }
