@@ -10,6 +10,19 @@ void addToPostfixSet(char postfixSet[], char value, int *stringTale)
     ++(*stringTale);
 }
 
+bool isEqualOperation(char value)
+{
+    if (value == '+' || value == '*' || value == '-' || value == '/')
+    {
+        return true;
+    }
+    if (value == ')' || value == '(')
+    {
+        return true;
+    }
+    return false;
+}
+
 int main() {
     char infixSet[maxLength];
     char postfixSet[maxLength];
@@ -22,6 +35,17 @@ int main() {
     printf("Insert your infix string\n");
     scanf("%s", infixSet);
     int stringLength = strlen(infixSet);
+    for (int i = 0; i < stringLength - 1; ++i)
+    {
+        if (!isEqualOperation(infixSet[i]))
+        {
+            if (!isEqualOperation(infixSet[i + 1]))
+            {
+                printf("Error: there are not enough binary operations");
+                return 0;
+            }
+        }
+    }
     int stringTale = 0;
     for (int i = 0; i < stringLength; ++i)
     {
