@@ -144,6 +144,10 @@ BinaryTreeNode* add(int value, BinaryTree* tree)
 bool search(int value, BinaryTree *tree)
 {
     BinaryTreeNode *node = tree->root;
+    if (node == NULL)
+    {
+        return false;
+    }
     while (true)
     {
         if (node->value == value)
