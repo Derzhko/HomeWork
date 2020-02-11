@@ -70,6 +70,7 @@ int main()
     if (!isValidString(postfixSet, stringLength))
     {
         printf("Error: the string is invalid");
+        deleteStack(myStack);
         return 0;
     }
     for (int i = 0; i < stringLength; ++i)
