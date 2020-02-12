@@ -28,7 +28,7 @@ List* createList()
     return list;
 }
 
-ListElement* createListElement(char name[], char phone[])
+ListElement* createListElement(char *name, char *phone)
 {
     ListElement *listElement = malloc(sizeof(ListElement));
     listElement->phone = malloc(sizeof(char) * length);
@@ -42,7 +42,7 @@ ListElement* createListElement(char name[], char phone[])
     return listElement;
 }
 
-void add(List* list, char name[], char phone[])
+void add(List* list, char *name, char *phone)
 {
     ListElement* newElement = createListElement(name, phone);
     if (list->head == NULL)

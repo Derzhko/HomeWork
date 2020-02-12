@@ -39,7 +39,7 @@ void findPhone(List* list)
     fgetc(stdin);
     fgets(name, maxLength, stdin);
     name[strlen(name) - 1] = '\0';
-    phone = findByName(list, name);
+    phone = findByName(list, name);//вот эта падла!!!!!
     if (phone != NULL)
     {
         printf("%s's phone number is %s\n", name, phone);
@@ -49,7 +49,7 @@ void findPhone(List* list)
         printf("Phone number is not found\n");
     }
     free(name);
-    free(phone);
+    //free(phone);
 }
 
 void findName(List* list)
@@ -73,7 +73,7 @@ void findName(List* list)
     {
         printf("Member is not found\n");
     }
-    free(name);
+    //free(name);
     free(phone);
 }
 
