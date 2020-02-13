@@ -166,7 +166,7 @@ void searchMinimumRightChild(BinaryTreeNode *minimumRightChild, BinaryTreeNode *
 int delete(int value, BinaryTree *tree)
 {
     BinaryTreeNode *child = tree->root;
-    BinaryTreeNode *parent = malloc(sizeof(BinaryTreeNode));
+    BinaryTreeNode *parent = child;
     if (child == NULL)
     {
         printf("ERROR: there is no such element\n");
