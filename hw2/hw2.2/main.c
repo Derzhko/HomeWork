@@ -1,68 +1,88 @@
 #include <stdio.h>
+#include <math.h>
+#include <stdbool.h>
 
-int getGCD(int a, int b)
+const float epsilon = 1e-7;
+
+struct Fraction
 {
-    while (a != 0 && b != 0) {
-        if (a >= b)
-        {
-            a %= b;
-        }
-        else
-        {
-            b %= a;
-        }
-    }
-    int result = 0;
-    if (a == 0)
-    {
-        result = b;
-    }
-    else
-    {
-        result = a;
-    }
-    return result;
+    float power;
+    int numerator;
+    int denominator;
+};
+
+bool floatNumbersCompare(float firstNumber, float secondNumber)
+{
+    return fabs(firstNumber - secondNumber) < epsilon;
 }
 
-void findingAFraction(int k)
+bool findFractionPower(struct Fraction list[], int length, float power)
 {
-    double eps = 1;
-    for (int i = 2; i <= k + 1; ++i)
+    for (int i = 0; i < length; ++i)
     {
-        eps /= (i + 0.);
-    }
-    int numeratorMin = k - 1;
-    int denominatorMin = k;
-    double min = (k - 1.) / k;
-    double previous = 0;
-    while (previous < min - eps)
-    {
-        for (int n = 1; n <= k - 1; ++n)
+        if (floatNumbersCompare(list[i].power, power))
         {
-            for (int d = k; d > n; --d)
+            return true;
+        }
+    }
+    return false;
+}
+
+void getAllFractions(int input, struct Fraction fractions[], int* newFrationCounter)
+{
+    int length = input / 2 * (input - 1);
+    for (int denominator = 2; denominator < input + 1; ++denominator)
+    {
+        for (int numerator = 1; numerator < denominator; ++numerator)
+        {
+            float power = (float) numerator / (float) denominator;
+            if (findFractionPower(fractions, length, power))
             {
-                if (previous + eps < n / (d + 0.) && n / (d + 0.) < min + eps && getGCD(n, d) == 1)
-                {
-                    min = n / (d + 0.);
-                    numeratorMin = n;
-                    denominatorMin = d;
-                }
+                continue;
+            }
+            else
+            {
+                fractions[*newFrationCounter].power = power;
+                fractions[*newFrationCounter].numerator = numerator;
+                fractions[*newFrationCounter].denominator = denominator;
+                *newFrationCounter += 1;
             }
         }
-        printf("%d / %d\n", numeratorMin, denominatorMin);
-        previous = min;
-        min = (k - 1.) / k;
     }
-    return;
 }
 
-
-int main()
+void printAllFractions(struct Fraction fractions[], int length)
 {
-    int maxDenominator = 0;
-    printf("Insert max denominator\n");
-    scanf("%d", &maxDenominator);
-    findingAFraction(maxDenominator);
+    for (int i = 0; i < length; ++i)
+    {
+        for (int j = i + 1; j < length; ++j)
+        {
+            if (fractions[j].power < fractions[i].power)
+            {
+                struct Fraction temporary = fractions[i];
+                fractions[i] = fractions[j];
+                fractions[j] = temporary;
+            }
+        }
+    }
+    for (int i = 0; i < length; ++i)
+    {
+        printf("%d%c%d \n", fractions[i].numerator, '/', fractions[i].denominator);
+    }
+}
+
+int main ()
+{
+    int input = 0;
+    int fractionsCounter = 0;
+    printf("Enter the number greater than 1 : ");
+    while (scanf("%d", &input) == 0)
+    {
+        scanf("%*[^\n]");
+        printf("Please enter the number other symbols : ");
+    }
+    struct Fraction fractions[input / 2 * (input - 1)];
+    getAllFractions(input, fractions, &fractionsCounter);
+    printAllFractions(fractions, fractionsCounter);
     return 0;
 }
-
